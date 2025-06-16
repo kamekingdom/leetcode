@@ -7,7 +7,7 @@
 # @lc code=start
 class Solution:
     def romanToInt(self, s: str) -> int:
-        symbol_to_value = {
+        symbol_to_value: dict[str, int] = {
             "I": 1,
             "V": 5,
             "X": 10,
@@ -17,11 +17,19 @@ class Solution:
             "M": 1000,
         }
 
-        romans: list[str] = list(s.strip())
-        answer: int = 0
+        romans: list[str] = list(reversed(s))
+        total: int = 0
+        prev_value: int = 0
+
         for roman in romans:
-            answer += symbol_to_value[roman]
-        return answer
+            curr_value: int = symbol_to_value[roman]
+            if curr_value < prev_value:
+                total -= curr_value
+            else:
+                total += curr_value
+            prev_value: int = curr_value
+
+        return total
 
 
 # @lc code=end
